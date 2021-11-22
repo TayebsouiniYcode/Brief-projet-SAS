@@ -101,8 +101,8 @@ bool operations(){
 void affichage() {
 	cleanCls();
 	
-	int _choix;
-	int tri;
+	int _choix, __choix;
+	int tri, i, j;
 	do {
 		printf("\t \t \t 1. tri par nom  \n \n \n");
 		printf("\t \t \t 2. tri par montant \n \n \n");
@@ -116,8 +116,36 @@ void affichage() {
 				printf("\t \t \t 1. ASC \n \n \n");
 				printf("\t \t \t 2. DESC \n \n \n");
 				printf("Entrer votre choix : ");
-				scanf("%d", &_choix);
-				//sortingByName();
+				scanf("%d", &__choix);
+				switch (__choix) {
+					case 1 : 
+						printf("Vous-avez choisir le tri par nom ASC \n");
+						struct compte tempCompte;
+						for(i = 0 ; i < nbrAccount ; i++)
+						{
+						    for(j = 0 ; j < nbrAccount-i-1 ; j++)
+						    {
+						        if(c[j].montant > c[j+1].montant)
+						        {
+						        	tempCompte = c[j+1];
+						            c[j+1]=c[j];
+						            c[j]=tempCompte;
+						        }
+						    }
+						}
+						
+						//affichage
+						for (i = 0 ; i < nbrAccount ; i++) {
+							printf("%s \t %s \t %s \t %g \n", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
+						}
+						break;
+					case 2 :
+						printf("Vous-avez choisir le tri par nom DESC \n");
+						break;
+				}
+				break;
+			case 2 : 
+				
 				break;
 		}
 	}while (_choix != 0);
