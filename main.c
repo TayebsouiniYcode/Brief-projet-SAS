@@ -333,7 +333,6 @@ int main(){
 	for(i = 0; i < nbrAccount; i++){
 		fprintf(file, "%s;%s;%s;%f,", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
 	}
-	
 	fclose(file);
 	return 0;
 }
