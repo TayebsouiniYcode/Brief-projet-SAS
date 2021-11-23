@@ -26,7 +26,6 @@ bool addAccount(int n){
 		
 		printf("Entrer le montant : ");
 		scanf("%f", &c[i].montant);
-		
 		nbrAccount++;
 		
 		cleanCls();
@@ -264,6 +263,16 @@ void getAccount() {
 	}
 }
 
+
+//charge array to file;
+/*
+void setArrayToFile(struct compte _c) {
+	FILE *file;
+	file = fopen("db.txt", "w");
+	fprintf(file, "%s;%s;%s;%f,", _c.cin, _c.nom, _c.prenom, _c.montant);
+	fclose(file);
+}
+*/
 int main(){
 	int choix, nbrNewAccount, i;
 	char cin[10];
@@ -315,5 +324,18 @@ int main(){
 			
 	} while(choix != 0);
 	
+	/*
+	for (i = 0 ; i < nbrAccount ; i++) {
+		setArrayToFile(c[i]);
+	}
+	*/
+	
+	FILE *file;
+	file = fopen("db.txt", "w");
+	for(i = 0; i < nbrAccount; i++){
+		fprintf(file, "%s;%s;%s;%f,", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
+	}
+	
+	fclose(file);
 	return 0;
 }
