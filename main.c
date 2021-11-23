@@ -3,25 +3,14 @@
 #include <string.h>
 
 
-//struct account
-struct compte {
-	char cin[10];
-	char nom[20];
-	char prenom[20];
-	float montant;
-};
+struct compte{ char cin[10]; char nom[20]; char prenom[20]; float montant; };
 
 struct compte c[1000];
 int nbrAccount = 0;
 
-//function Clean
-void cleanCls(){
-	system("cls||clear");
-}
+void cleanCls(){system("cls||clear");}
 
-//fonction
 bool addAccount(int n){
-	//struct compte c[nbrAccount];
 	int i;
 	if (n==0) n = 1;
 	for (i = 0 ; i < n; i++){
@@ -36,16 +25,13 @@ bool addAccount(int n){
 		
 		printf("Entrer le montant : ");
 		scanf("%f", &c[i].montant);
+		
 		nbrAccount++;
 	}
 	return true;
 } 
 
-//Depot
-bool depot(char cin[10]) {
-	
-}
-//fonction operation
+//fonction operationS
 bool operations(){
 	int _choix, i;
 	char cin[10];
@@ -54,8 +40,10 @@ bool operations(){
 	printf("Entrer le CIN du compte : ");
 	scanf("%s", cin);
 
-	cleanCls();
+	
 	do {
+		cleanCls();
+		
 		printf("\n\n\n\n\n\n");
 		printf("\t \t \t 1. Depot \n \n \n");
 		printf("\t \t \t 2. Retrait \n \n \n");
@@ -96,13 +84,30 @@ bool operations(){
 	}while (_choix != 0);
 	cleanCls();
 }
-
+bool getCIN() {
+	int i;
+	char cin[10];
+	bool Trouve = false;
+		printf("Entrer le CIN : ");
+		scanf("%s", cin);
+		for (i = 0; i < nbrAccount ; i++) {
+			if(strcmp(c[i].cin, cin) == 0){
+				Trouve = true;
+			}
+		}
+		if (Trouve) {
+			printf("CIN Trouve \n");
+		} else {
+			printf("CIN non trouve \n");
+		}
+}
 
 void affichage() {
 	cleanCls();
 	struct compte tempCompte;
 	int _choix, __choix;
 	int tri, i, j;
+	char cin[10];
 	do {
 		printf("\t \t \t 1. tri par nom  \n \n \n");
 		printf("\t \t \t 2. tri par montant \n \n \n");
@@ -123,8 +128,7 @@ void affichage() {
 						{
 						    for(j = 0 ; j < nbrAccount-i-1 ; j++)
 						    {
-						        //if(c[j].montant > c[j+1].montant)
-						        if(strcmp(c[j].prenom, c[j+1].prenom) > 1)
+						        if(strcmp(c[j].prenom, c[j+1].prenom) > 0)
 						        {
 						        	tempCompte = c[j+1];
 						            c[j+1]=c[j];
@@ -161,7 +165,6 @@ void affichage() {
 						for (i = 0 ; i < nbrAccount ; i++) {
 							printf("%s \t %s \t %s \t %g \n", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
 						}
-						break;
 						break;
 				}
 				break;
@@ -216,8 +219,34 @@ void affichage() {
 				}
 
 				break;
+				case 3 :
+						getCIN();
+						break;
 		}
+
 	}while (_choix != 0);
+}
+
+bool fedilisation() {
+	// Tri 
+	int i, j;
+	struct compte tempCompte;
+	for(i = 0 ; i < nbrAccount ; i++)
+	{
+	    for(j = 0 ; j < nbrAccount-i-1 ; j++)
+	    {
+	        if(c[j].montant > c[j+1].montant)
+	        {
+	        	tempCompte = c[j+1];
+	            c[j+1]=c[j];
+	            c[j]=tempCompte;
+	        }
+	    }
+	}
+	//top 3
+	for (i = nbrAccount ; i > (nbrAccount - 3) ; i--) {
+		c[i].montant *= 0.013;
+	}
 }
 
 int main(){
@@ -248,7 +277,7 @@ int main(){
 				}
 				break;
 			case 2 :
-				printf("Entrer le nombre des comptes que vous pouvez cree : ");
+				printf("Entrer le nombre des comptes que vous voulez cree : ");
 				scanf("%d", &nbrNewAccount);
 				addAccount(nbrNewAccount);
 				break;
@@ -258,8 +287,14 @@ int main(){
 			case 4 : 
 				affichage();
 				break;
+			case 5 : 
+				fedilisation();
+				break;
 			case 6 : 
 				cleanCls();
+				break;
+			case 7 :
+				printf("les comptes : %d", nbrAccount);
 				break;
 		}
 		
