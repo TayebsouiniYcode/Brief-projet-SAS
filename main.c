@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-struct compte{ char cin[10]; char nom[20]; char prenom[20]; float montant; };
+struct compte{ char cin[10]; char nom[20]; char prenom[20]; float montant;};
 
 struct compte c[1000];
 int nbrAccount = 0;
@@ -13,6 +13,7 @@ void cleanCls(){system("cls||clear");}
 bool addAccount(int n){
 	int i;
 	if (n==0) n = 1;
+
 	for (i = 0 ; i < n; i++){
 		printf("Entrer le CIN : ");
 		scanf("%s", c[i].cin);
@@ -27,8 +28,12 @@ bool addAccount(int n){
 		scanf("%f", &c[i].montant);
 		
 		nbrAccount++;
+		
+		cleanCls();
+		
+		printf("Compte ajouter avec succes");
 	}
-	return true;
+	
 } 
 
 //fonction operationS
@@ -106,7 +111,7 @@ void affichage() {
 	cleanCls();
 	struct compte tempCompte;
 	int _choix, __choix;
-	int tri, i, j;
+	int i, j;
 	char cin[10];
 	do {
 		printf("\t \t \t 1. tri par nom  \n \n \n");
@@ -249,12 +254,22 @@ bool fedilisation() {
 	}
 }
 
+void getAccount() {
+	int i;
+	
+	printf("NOM \t | PRENOM \t | CIN \t | MONTANT |");
+	
+	for(i = 0; i < nbrAccount; i++) {
+		printf("%s \t %s \t %s \t %f", c[i].nom, c[i].prenom, c[i].cin, c[i].montant);
+	}
+}
+
 int main(){
 	int choix, nbrNewAccount, i;
-	char data[50], cin[10];
+	char cin[10];
 
-	//Menu
 	do {
+		//cleanCls();
 		
 		printf("\n\n\n\n\n\n");
 		printf("\t\t\t\t 1. Introduire un compte \n\n\n");
@@ -269,17 +284,17 @@ int main(){
 		
 		switch (choix) {
 			case 1 : 
-				cleanCls();
-				if(addAccount(0)){
-					printf("Votre compte a ete cree avec succes ");
-				} else {
-					printf("Erreur !");
-				}
+				addAccount(0);
 				break;
 			case 2 :
 				printf("Entrer le nombre des comptes que vous voulez cree : ");
 				scanf("%d", &nbrNewAccount);
-				addAccount(nbrNewAccount);
+				
+				if(addAccount(nbrNewAccount)){
+					printf("Operation termine avec succes");
+				} else {
+					printf("Operation echoue");
+				}
 				break;
 			case 3 :
 				operations();
@@ -291,16 +306,14 @@ int main(){
 				fedilisation();
 				break;
 			case 6 : 
-				cleanCls();
+				getAccount();
 				break;
 			case 7 :
 				printf("les comptes : %d", nbrAccount);
 				break;
 		}
-		
-		
+			
 	} while(choix != 0);
-	
 	
 	return 0;
 }
