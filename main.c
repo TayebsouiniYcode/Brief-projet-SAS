@@ -12,25 +12,25 @@ void cleanCls(){system("cls||clear");}
 
 bool addAccount(int n){
 	int i;
-	if (n==0) n = 1;
+	//if (n==0) n = 1;
 
 	for (i = 0 ; i < n; i++){
 		printf("Entrer le CIN : ");
-		scanf("%s", c[i].cin);
+		scanf("%s", c[nbrAccount].cin);
 		
 		printf("Entrer le nom : ");
-		scanf("%s", c[i].nom);
+		scanf("%s", c[nbrAccount].nom);
 		
 		printf("Entrer le prenom : ");
-		scanf("%s", c[i].prenom);
+		scanf("%s", c[nbrAccount].prenom);
 		
 		printf("Entrer le montant : ");
-		scanf("%f", &c[i].montant);
+		scanf("%f", &c[nbrAccount].montant);
 		nbrAccount++;
 		
 		cleanCls();
 		
-		printf("Compte ajouter avec succes");
+		printf("\n \n \n Compte ajouter avec succes \n \n \n");
 	}
 	
 } 
@@ -239,7 +239,7 @@ bool fedilisation() {
 	{
 	    for(j = 0 ; j < nbrAccount-i-1 ; j++)
 	    {
-	        if(c[j].montant > c[j+1].montant)
+	        if(c[j].montant < c[j+1].montant)
 	        {
 	        	tempCompte = c[j+1];
 	            c[j+1]=c[j];
@@ -248,9 +248,12 @@ bool fedilisation() {
 	    }
 	}
 	//top 3
-	for (i = nbrAccount ; i > (nbrAccount - 3) ; i--) {
-		c[i].montant *= 0.013;
+	for (i = 0 ; i < 3 ; i++) {
+		c[i].montant += (c[i].montant * 1.3) / 100;
 	}
+	
+	cleanCls();
+	printf("Les trois premier compte a ajouter 1.3 %s avec succes", "%");
 }
 
 void getAccount() {
@@ -293,17 +296,12 @@ int main(){
 		
 		switch (choix) {
 			case 1 : 
-				addAccount(0);
+				addAccount(1);
 				break;
 			case 2 :
 				printf("Entrer le nombre des comptes que vous voulez cree : ");
 				scanf("%d", &nbrNewAccount);
-				
-				if(addAccount(nbrNewAccount)){
-					printf("Operation termine avec succes");
-				} else {
-					printf("Operation echoue");
-				}
+				addAccount(nbrNewAccount);
 				break;
 			case 3 :
 				operations();
