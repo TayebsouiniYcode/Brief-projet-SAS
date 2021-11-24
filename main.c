@@ -19,11 +19,9 @@ void charginDataToC(){
 		if (feof(file)){
 			break;
 		}
-		
 	}
 	fclose(file);
 }
-
 void cleanCls(){system("cls||clear");}
 bool addAccount(int n){
 	int i;
@@ -48,7 +46,7 @@ bool operations(){
 	float operationValue;
 	
 	printf("Entrer le CIN du compte : ");
-	scanf("%s", cin);	
+	scanf("%s", cin);
 	do {
 		cleanCls();
 		printf("\n\n\n\n\n\n");
@@ -128,7 +126,7 @@ void affichage() {
 					case 1 : 
 						for(i = 0 ; i < nbrAccount ; i++){
 						    for(j = 0 ; j < nbrAccount-i-1 ; j++){
-						        if(strcmp(c[j].prenom, c[j+1].prenom) > 0){
+						        if(strcmp(c[j].nom, c[j+1].nom) > 0){
 						        	tempCompte = c[j+1];
 						            c[j+1]=c[j];
 						            c[j]=tempCompte;
@@ -144,7 +142,7 @@ void affichage() {
 					case 2 :
 						for(i = 0 ; i < nbrAccount ; i++){
 						    for(j = 0 ; j < nbrAccount-i-1 ; j++){
-						        if(strcmp(c[j].prenom, c[j+1].prenom) < 0){
+						        if(strcmp(c[j].nom, c[j+1].nom) < 0){
 						        	tempCompte = c[j+1];
 						            c[j+1]=c[j];
 						            c[j]=tempCompte;
@@ -236,6 +234,7 @@ int main(){
 	charginDataToC();
 	int choix, nbrNewAccount, i;
 	char cin[10];
+	test:
 	do {
 		//cleanCls();
 		printf("\n\n\n\n");
@@ -262,6 +261,9 @@ int main(){
 			case 5 : 	fedilisation();	break;
 			case 6 : 	getAccount();	break;
 			case 7 :	printf("les comptes : %d", nbrAccount);	break;
+			default : 	cleanCls();	printf(" \n \n \n \n \n \n \n  \t\t\t\t Votre choix n'est pas valide !");
+						 getchar(); goto test;
+						 
 		}	
 	} while(choix != 0);
 	
@@ -273,5 +275,3 @@ int main(){
 	fclose(file);
 	return 0;
 }
-
-
