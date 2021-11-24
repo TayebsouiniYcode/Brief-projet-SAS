@@ -1,12 +1,21 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-
+#include <ctype.h>
 
 struct compte{ char cin[10]; char nom[20]; char prenom[20]; float montant;};
 struct compte c[1000];
 int nbrAccount = 0;
 
+void chargingPage(){
+	printf("\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\tLoading.");
+	sleep(1);
+	printf(".");
+	sleep(1);
+	printf(".");
+
+	cleanCls();
+}
 void charginDataToC(){
 	int i = 0;
 	struct compte p;
@@ -43,6 +52,8 @@ bool addAccount(int n){
 		nbrAccount++;
 		cleanCls();
 		printf("\n \n \n Compte ajouter avec succes \n \n \n");
+		sleep(2);
+		cleanCls();
 	}
 } 
 bool operations(){
@@ -258,12 +269,27 @@ double getAverage() {
 
 	return average;
 }
+int getAccountByChar(char _char){
+	int i;
+	bool estTrouve = false;
+	cleanCls();
+	for (i = 0; i < nbrAccount; i++) {
+		if(c[i].nom[0] ==  _char || c[i].nom[0] == toupper(_char)) {
+			printf("\n \n \n \n \t \t \tNom : %s \t Prenom : %s \t CIN : %s \t Montant : %f \n \n \n ", c[i].nom, c[i].prenom, c[i].cin, c[i].montant);
+			estTrouve = true;
+		} 
+	}
+	if (estTrouve == false )
+		printf("aucun nom");
+}
 int main(){
+	chargingPage();
 	charginDataToC();
 	
 	
 	int choix, nbrNewAccount, i;
 	char cin[10];
+	char ch;
 	test:
 	do {
 		//cleanCls();
@@ -277,16 +303,18 @@ int main(){
 		printf("\t\t\t\t 7. Nombre des comptes  \n\n");
 		printf("\t\t\t\t 8. La somme des montants \n\n");
 		printf("\t\t\t\t 9. La moyenne des la totalités des montants \n\n");
+		printf("\t\t\t\t 10. Recherche par premier caractere \n\n");
 		printf("\t\t\t\t 0. Quitter \n\n");
 		
 		printf("Entrer votre choix : ");
 		scanf("%d", &choix);
 		
 		switch (choix) {
-			case 1 : addAccount(1);	break;
+			case 1 : cleanCls();	addAccount(1);	break;
 			case 2 :
 				printf("Entrer le nombre des comptes que vous voulez cree : ");
 				scanf("%d", &nbrNewAccount);
+				cleanCls();
 				addAccount(nbrNewAccount);
 				break;
 			case 3 :	operations();	break;
@@ -296,6 +324,13 @@ int main(){
 			case 7 :	cleanCls();		printf("les comptes : %d", nbrAccount);	break;
 			case 8 :	cleanCls();		printf(" La somme des montant dans la banque est : %f ", getSum());	 break;
 			case 9 :	cleanCls();		printf("La moyenne est : %f \n", getAverage());	break;
+			case 10 : 
+				printf("Entrer un Caractere : ");
+				fflush(stdin); //clean buffer
+				scanf("%c", &ch);
+				getAccountByChar(ch);
+				break;
+			case 0 : break;
 			default : 	cleanCls();	printf(" \n \n \n \n \n \n \n  \t\t\t\t Votre choix n'est pas valide !");
 						 getchar(); goto test;
 						 
