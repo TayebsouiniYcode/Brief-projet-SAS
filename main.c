@@ -2,20 +2,22 @@
 #include <stdbool.h>
 #include <string.h>
 
+
 struct compte{ char cin[10]; char nom[20]; char prenom[20]; float montant;};
 struct compte c[1000];
 int nbrAccount = 0;
 
 void charginDataToC(){
-	//char dataText[100];
 	int i = 0;
 	struct compte p;
 	FILE *file;
-	//int c,  i;
 	file = fopen("data.txt", "r");
 	while (1){
 		fscanf(file, "%s %s %s %f", c[nbrAccount].nom, c[nbrAccount].prenom, c[nbrAccount].cin, &c[nbrAccount].montant);
-		nbrAccount++;
+		if (strlen(c[nbrAccount].cin) == 0){
+			printf("Ligne vide");
+		} else 
+			nbrAccount++;
 		if (feof(file)){
 			break;
 		}
@@ -28,6 +30,9 @@ bool addAccount(int n){
 	for (i = 0 ; i < n; i++){
 		printf("Entrer le CIN : ");
 		scanf("%s", c[nbrAccount].cin);
+		
+		if(strcmp(c[nbrAccount].cin, "exit") == 0) { break;}
+		
 		printf("Entrer le nom : ");
 		scanf("%s", c[nbrAccount].nom);
 		printf("Entrer le prenom : ");
@@ -107,19 +112,21 @@ void affichage() {
 	cleanCls();
 	struct compte tempCompte;
 	int _choix,i, j;
+	float min;
 	char cin[10];
 	do {
-		printf("\t \t \t 1. tri par nom  \n \n \n");
-		printf("\t \t \t 2. tri par montant \n \n \n");
-		printf("\t \t \t 3. Recherche par CIN \n \n \n");
-		printf("\t \t \t 00. Menu principale \n \n \n");
+		printf("\n\n\n\n\t \t \t \t\t 1. tri par nom  \n \n \n");
+		printf("\t \t \t \t\t 2. tri par montant \n \n \n");
+		printf("\t \t \t \t\t 3. Recherche par CIN \n \n \n");
+		printf("\t \t \t \t\t 00. Menu principale \n \n \n");
 		printf("Entrer votre choix : ");
 		scanf("%d", &_choix);
 		
 		switch (_choix) {
 			case 1 : 
-				printf("\t \t \t 1. ASC \n \n \n");
-				printf("\t \t \t 2. DESC \n \n \n");
+				cleanCls();
+				printf("\n\n\n\n\t \t \t \t\t 1. ASC \n \n \n");
+				printf("\t \t \t \t\t 2. DESC \n \n \n");
 				printf("Entrer votre choix : ");
 				scanf("%d", &_choix);
 				switch (_choix) {
@@ -134,10 +141,11 @@ void affichage() {
 						    }
 						}
 						printf("\n\n\n\t\t\tCIN \t NOM \t PRENOM \t MONTANT\n\n");
-						printf("---------------------------------- \n \n ");
+						printf("\t\t\t---------------------------------- \n \n ");
 						for (i = 0 ; i < nbrAccount ; i++) {
-							printf("\t\t\t%s \t %s \t %s \t %g \n", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
+							printf("\t\t\t%s \t %s \t %s \t %g \n\n\n\n", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
 						}
+						
 						break;
 					case 2 :
 						for(i = 0 ; i < nbrAccount ; i++){
@@ -149,8 +157,8 @@ void affichage() {
 						        }
 						    }
 						}
-						printf("\n\n\n \t\t\tCIN \t NOM \t PRENOM \t MONTANT\n\n");
-						printf("---------------------------------- \n \n ");
+						printf("\n\n\n\t\t\tCIN \t NOM \t PRENOM \t MONTANT\n\n");
+						printf("\t\t\t---------------------------------- \n \n ");
 						for (i = 0 ; i < nbrAccount ; i++) 
 							printf("\t\t\t%s \t %s \t %s \t %g \n", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
 						break;
@@ -172,10 +180,13 @@ void affichage() {
 						        }
 						    }
 						}
+						printf("Entrer la valeur MIN : ");
+						scanf("%f", &min);
 						printf("\n\n\n \t\t\tCIN \t NOM \t PRENOM \t MONTANT\n\n");
 						printf("---------------------------------- \n \n ");
 						for (i = 0 ; i < nbrAccount ; i++) {
-							printf("\t\t\t %s \t %s \t %s \t %g \n", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
+							if(c[i].montant >= min)
+								printf("\t\t\t %s \t %s \t %s \t %g \n", c[i].cin, c[i].nom, c[i].prenom, c[i].montant);
 						}
 						break;
 					case 2 : 
@@ -188,6 +199,8 @@ void affichage() {
 						        }
 						    }
 						}
+						printf("Entrer la valeur MIN : ");
+						scanf("%f", &min);
 						printf("\n\n\n \t\t\tCIN \t NOM \t PRENOM \t MONTANT\n\n");
 						printf("---------------------------------- \n \n ");
 						for (i = 0 ; i < nbrAccount ; i++) {
@@ -223,28 +236,48 @@ bool fedilisation() {
 void getAccount() {
 	int i;
 	if(nbrAccount > 0){
-		printf("\t\t\t NOM \t | PRENOM \t | CIN \t | MONTANT | \n");
+		printf("\t\t\t NOM \t\t | PRENOM \t\t | CIN \t\t | MONTANT | \n");
 		for(i = 0; i < nbrAccount; i++) 
-			printf("\t\t\t%s \t %s \t %s \t %f \n", c[i].nom, c[i].prenom, c[i].cin, c[i].montant);	
+			printf("\t\t\t%s \t\t %s \t\t %s \t\t %f \n", c[i].nom, c[i].prenom, c[i].cin, c[i].montant);	
 	} else 
 		printf("il n y a pas de comptes !!");
 }
+double getSum(){
+	int i;
+	double sum = 0;
+	for (i = 0; i < nbrAccount ; i++){
+		sum += c[i].montant;
+	}
+	
+	return sum;
+}
+double getAverage() {
+	int i;
+	double average, sum;
+	average =  getSum() / nbrAccount;
 
+	return average;
+}
 int main(){
 	charginDataToC();
+	
+	
 	int choix, nbrNewAccount, i;
 	char cin[10];
 	test:
 	do {
 		//cleanCls();
 		printf("\n\n\n\n");
-		printf("\t\t\t\t 1. Introduire un compte \n\n\n");
-		printf("\t\t\t\t 2. Introduire plusieurs comptes \n\n\n");
-		printf("\t\t\t\t 3. Operations \n\n\n");
-		printf("\t\t\t\t 4. Consultation \n\n\n");
-		printf("\t\t\t\t 5. Fidelisation \n\n\n");
-		printf("\t\t\t\t 6. State \n\n\n");
-		printf("\t\t\t\t 0. Quitter \n\n\n");
+		printf("\t\t\t\t 1. Introduire un compte \n\n");
+		printf("\t\t\t\t 2. Introduire plusieurs comptes \n\n");
+		printf("\t\t\t\t 3. Operations \n\n");
+		printf("\t\t\t\t 4. Consultation \n\n");
+		printf("\t\t\t\t 5. Fidelisation \n\n");
+		printf("\t\t\t\t 6. State \n\n");
+		printf("\t\t\t\t 7. Nombre des comptes  \n\n");
+		printf("\t\t\t\t 8. La somme des montants \n\n");
+		printf("\t\t\t\t 9. La moyenne des la totalités des montants \n\n");
+		printf("\t\t\t\t 0. Quitter \n\n");
 		
 		printf("Entrer votre choix : ");
 		scanf("%d", &choix);
@@ -260,7 +293,9 @@ int main(){
 			case 4 : 	affichage();	break;
 			case 5 : 	fedilisation();	break;
 			case 6 : 	getAccount();	break;
-			case 7 :	printf("les comptes : %d", nbrAccount);	break;
+			case 7 :	cleanCls();		printf("les comptes : %d", nbrAccount);	break;
+			case 8 :	cleanCls();		printf(" La somme des montant dans la banque est : %f ", getSum());	 break;
+			case 9 :	cleanCls();		printf("La moyenne est : %f \n", getAverage());	break;
 			default : 	cleanCls();	printf(" \n \n \n \n \n \n \n  \t\t\t\t Votre choix n'est pas valide !");
 						 getchar(); goto test;
 						 
