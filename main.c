@@ -13,12 +13,10 @@ void chargingPage(){
 	printf(".");
 	sleep(1);
 	printf(".");
-
 	cleanCls();
 }
 void charginDataToC(){
 	int i = 0;
-	struct compte p;
 	FILE *file;
 	file = fopen("data.txt", "r");
 	while (1){
@@ -274,7 +272,7 @@ int getAccountByChar(char _char){
 	bool estTrouve = false;
 	cleanCls();
 	for (i = 0; i < nbrAccount; i++) {
-		if(c[i].nom[0] ==  _char || c[i].nom[0] == toupper(_char)) {
+		if(c[i].nom[0] ==  tolower(_char) || c[i].nom[0] == toupper(_char)) {
 			printf("\n \n \n \n \t \t \tNom : %s \t Prenom : %s \t CIN : %s \t Montant : %f \n \n \n ", c[i].nom, c[i].prenom, c[i].cin, c[i].montant);
 			estTrouve = true;
 		} 
