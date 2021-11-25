@@ -37,7 +37,12 @@ bool addAccount(int n){
 	for (i = 0 ; i < n; i++){
 		printf("Entrer le CIN : ");
 		scanf("%s", c[nbrAccount].cin);
-		
+		for(i = 0 ; i < nbrAccount ; i++) {
+			if (strcmp(c[i].cin, c[nbrAccount].cin) == 0) {
+				printf("CIN Exist deja");
+				return 0;
+			}
+		}
 		if(strcmp(c[nbrAccount].cin, "exit") == 0) { break;}
 		
 		printf("Entrer le nom : ");
@@ -103,7 +108,7 @@ bool operations(){
 	cleanCls();
 }
 bool getCIN() {
-	int i;
+	int i, pos;
 	char cin[10];
 	bool Trouve = false;
 	printf("Entrer le CIN : ");
@@ -111,9 +116,11 @@ bool getCIN() {
 	for (i = 0; i < nbrAccount ; i++) {
 		if(strcmp(c[i].cin, cin) == 0)
 			Trouve = true;
+			pos = i;
+			break;
 	}
 	if (Trouve) 
-		printf("CIN Trouve \n");
+		printf("CIN Trouve \n Nom : %s", c[pos].nom);
 	else 
 		printf("CIN non trouve \n");
 }
@@ -257,14 +264,12 @@ double getSum(){
 	for (i = 0; i < nbrAccount ; i++){
 		sum += c[i].montant;
 	}
-	
 	return sum;
 }
 double getAverage() {
 	int i;
 	double average, sum;
 	average =  getSum() / nbrAccount;
-
 	return average;
 }
 int getAccountByChar(char _char){
@@ -280,7 +285,7 @@ int getAccountByChar(char _char){
 	if (estTrouve == false )
 		printf("aucun nom");
 }
-int main(){
+int main(){ 
 	chargingPage();
 	charginDataToC();
 	
@@ -300,7 +305,7 @@ int main(){
 		printf("\t\t\t\t 6. State \n\n");
 		printf("\t\t\t\t 7. Nombre des comptes  \n\n");
 		printf("\t\t\t\t 8. La somme des montants \n\n");
-		printf("\t\t\t\t 9. La moyenne des la totalités des montants \n\n");
+		printf("\t\t\t\t 9. La moyenne des la totalites des montants \n\n");
 		printf("\t\t\t\t 10. Recherche par premier caractere \n\n");
 		printf("\t\t\t\t 0. Quitter \n\n");
 		
