@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
+
 struct compte{ char cin[10]; char nom[20]; char prenom[20]; float montant;};
 struct compte c[1000];
 int nbrAccount = 0;
